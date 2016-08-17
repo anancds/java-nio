@@ -6,6 +6,9 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
+/**
+ * http://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html#
+ */
 public class ChannelTest {
 
     public static void main(String[] args) throws IOException {
