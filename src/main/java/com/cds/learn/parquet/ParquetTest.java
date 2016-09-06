@@ -3,7 +3,6 @@ package com.cds.learn.parquet;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.FsUrlStreamHandlerFactory;
 import org.apache.hadoop.fs.Path;
 import org.apache.parquet.example.data.Group;
 import org.apache.parquet.format.converter.ParquetMetadataConverter;
@@ -18,22 +17,22 @@ import org.mapdb.DBMaker;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
+import java.util.Arrays;
 import java.util.concurrent.ConcurrentMap;
 
 public class ParquetTest {
-    static {
-        URL.setURLStreamHandlerFactory(new FsUrlStreamHandlerFactory());
-    }
+
     private static Configuration conf = new Configuration();
 
     private static String readParquet() throws URISyntaxException, IOException {
 
-        FileSystem fs = FileSystem.get(conf);
-        Path path = new Path("/salut/bigdata/traffic/Hrecord");
+//        FileSystem fs = FileSystem.get(URI.create("hdfs://207.207.77.62:8020"), conf);
+                FileSystem fs = FileSystem.get(conf);
+//        Path path = new Path("/salut/image/FaceImage/Past/");
+        Path path = new Path("/salut");
 
         FileStatus[] years = fs.listStatus(path);
-        System.out.println(years);
+        System.out.println(Arrays.toString(years));
         for (FileStatus year : years) {
             FileStatus[] months = fs.listStatus(year.getPath());
             for (FileStatus month : months) {
@@ -44,9 +43,12 @@ public class ParquetTest {
                         .readFooter(conf, files[0].getPath(), ParquetMetadataConverter.NO_FILTER);
                     System.out.println(readFooter.getFileMetaData().getSchema());
                     ReadSupport<Group> readSupport = new GroupReadSupport();
-                    ParquetReader<Group> reader =
-                        ParquetReader.builder(readSupport, files[0].getPath()).build();
-                    System.out.println(reader.read().getLong("recordId", 0));
+                    ParquetReader<SimpleRecord> reader =
+                        ParquetReader.builder(new SimpleReadSupport(), files[0].getPath()).build();
+                    SimpleRecord value = reader.read();
+                    System.out.println("abcdefs:" + value.getValues());
+
+
 
                 }
             }
