@@ -12,6 +12,7 @@ import org.apache.parquet.schema.MessageType;
 public class SimpleReadSupport extends ReadSupport<SimpleRecord> {
     @Override
     public RecordMaterializer<SimpleRecord> prepareForRead(Configuration conf, Map<String,String> metaData, MessageType schema, ReadContext context) {
+        System.out.println(schema);
         return new SimpleRecordMaterializer(schema);
     }
 
