@@ -21,11 +21,21 @@ import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 public class ParquetTest {
 
     private static Configuration conf = new Configuration();
+
+    private static String loadData(String business, int dimNums) {
+//        switch (business) {
+//            case "dulSnapID FaceImage":
+//                break;
+//
+//        }
+        return "";
+    }
 
     private static String readParquet() throws URISyntaxException, IOException {
 
@@ -63,7 +73,10 @@ public class ParquetTest {
                     ParquetReader<Group> reader1 =
                         ParquetReader.builder(readSupport, files[0].getPath()).build();
                     Group group = reader1.read();
-                    System.out.println(group.getGroup("features", 0).getGroup("bag", 180).getDouble("array", 0));
+                    System.out.println(group.getGroup("features", 0).getGroup("bag", 0).getDouble("array", 0));
+                    for (int i = 0; i < 180; i++) {
+                        System.out.println(group.getGroup("features", 0).getGroup("bag", i).getDouble("array", 0));
+                    }
 
                 }
             }
