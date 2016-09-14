@@ -1,6 +1,5 @@
 package com.cds.learn;
 
-import java.util.Collections;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -19,14 +18,16 @@ public class ConcurrentHashMapTest {
         executorService.submit(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < 50_0000; i++) {
-                    map.put(random.nextFloat(), random.nextLong());
+                for (int i = 0; i < 5; i++) {
+                    map.put(random.nextFloat(), 110L);
                 }
             }
         });
 
         executorService.shutdown();
         executorService.awaitTermination(10, TimeUnit.DAYS);
+        System.out.println(map.size());
+        System.out.println(map.values());
         System.out.println((System.currentTimeMillis() - t1));
     }
 }
