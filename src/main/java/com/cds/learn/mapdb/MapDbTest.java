@@ -2,27 +2,27 @@ package com.cds.learn.mapdb;
 
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
+import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentMap;
 
-@SuppressWarnings("unchecked") public class MapDbTest {
+@SuppressWarnings("unchecked")
+public class MapDbTest {
 
     private static void helloWorld() {
 
 
-
         DB db = DBMaker.memoryDB().fileMmapEnable().checksumHeaderBypass().make();
         ConcurrentMap<Long, float[]> map =
-            db.hashMap("map", Serializer.LONG, Serializer.JAVA).createOrOpen();
+                db.hashMap("map", Serializer.LONG, Serializer.JAVA).createOrOpen();
         System.out.println("begin!!!!");
 
         System.out.println(System.currentTimeMillis());
 
         Arrays.sort(map.keySet().toArray());
         System.out.println(System.currentTimeMillis());
-
 
 
         for (long i = 10000L; i < 300000L; i++) {
@@ -38,6 +38,19 @@ import java.util.concurrent.ConcurrentMap;
 
         System.exit(0);
     }
+
+    private static void HtreemapTest() {
+        DB dbMemory = DBMaker.memoryDB().make();
+        HTreeMap inMemory = dbMemory.hashMap("inMemory").expireMaxSize(1).createOrOpen();
+        inMemory.put("a", 1);
+
+        try {
+            Thread.sleep(100000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void main(String[] args) {
 
@@ -57,9 +70,9 @@ import java.util.concurrent.ConcurrentMap;
 //            }
 //        }).start();
 
-        helloWorld();
+//        helloWorld();
 
-
+        HtreemapTest();
 
     }
 }

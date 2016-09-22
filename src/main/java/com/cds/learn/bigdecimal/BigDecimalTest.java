@@ -33,9 +33,9 @@ public class BigDecimalTest {
         float test = random.nextFloat();
         double d = test / 100_0000_0000.0;
 
-        long ll = random.nextLong();
+        int ll = random.nextInt();
         System.out.println(ll);
-        String last = prefix + ll;
+        String last = prefix + Math.abs(ll);
         BigDecimal dd = new BigDecimal(last);
         BigDecimal distance = f.add(dd);
         System.out.println(distance);
