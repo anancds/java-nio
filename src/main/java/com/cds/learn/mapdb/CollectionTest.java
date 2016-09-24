@@ -14,7 +14,7 @@ public class CollectionTest {
 
             Entity entity = new Entity();
             entity.setId(i);
-            entity.setNorm(random.nextFloat());
+            entity.setNorm(0.22f);
             list.add(entity);
         }
         Entity e1 = new Entity();
@@ -37,7 +37,9 @@ public class CollectionTest {
             public int compare(Entity o1, Entity o2) {
                 if (o1.getNorm() >= o2.getNorm()) {
                     return -1;
-                }else {
+                }else if (o1.getNorm() == o2.getNorm()){
+                    return 0;
+                } else {
                     return 1;
                 }
             }
